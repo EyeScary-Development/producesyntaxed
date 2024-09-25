@@ -8,7 +8,7 @@ BLUE = '\033[38;5;117m' #dark-aqua sort of colour
 BLUE2 = '\033[96m' #darker blue
 
 #This doesn't really need to be part of the ESDExt so it's here now
-def producesyntaxed(text, color, useSpace=True):
+def producesyntaxed(text, color, useSpace=True, newLine=True):
     match color:
         case 'red':
             colour = RED
@@ -24,10 +24,11 @@ def producesyntaxed(text, color, useSpace=True):
             colour = BLUE2
         case _:
             colour = Exception('Invalid colour')
-    try:
-        if useSpace:
-            sys.stdout.write(colour + text + '\033[0m' + ' ')
-        else:
-            sys.stdout.write(colour + text + '\033[0m')
-    except:
-        print(text)
+    if useSpace and newLine:
+        sys.stdout.write(colour + text + '\033[0m' + ' \n')
+    elif useSpace:
+        sys.stdout.write(colour + text + '\033[0m' + ' ')
+    elif newLine:
+        sys.stdout.write(colour + text + '\033[0m' + '\n')
+    else:
+        sys.stdout.write(colour + text + '\033[0m')
